@@ -1,5 +1,7 @@
 package org.satabdi.javaResttutorial.messengerApp.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,7 +11,7 @@ public class Message {
 	
 	private long id;
 	private String message;
-	private Date created;
+	private Timestamp createdAt;
 	private String author;
 	
 	public Message() {}
@@ -18,7 +20,10 @@ public class Message {
 		this.id = id;
 		this.message = message;
 		this.author = author;
-		this.created = new Date();
+		
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+		this.createdAt = ts;
 	}
 	
 	
@@ -34,11 +39,11 @@ public class Message {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Date getCreated() {
-		return created;
+	public Timestamp getCreated() {
+		return createdAt;
 	}
-	public void setCreated(Date created) {
-		this.created = created;
+	public void setCreated(Timestamp created) {
+		this.createdAt = created;
 	}
 	public String getAuthor() {
 		return author;
