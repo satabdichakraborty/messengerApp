@@ -26,6 +26,12 @@ public class Message {
 		this.createdAt = ts;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Message Id =" +this.id+ " : message = ["+this.message+"] : createdAt = "+this.createdAt+ " : author = "+this.author;
+	}
+	
 	
 	public long getId() {
 		return id;

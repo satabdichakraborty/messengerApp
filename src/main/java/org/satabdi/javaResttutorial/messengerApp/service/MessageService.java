@@ -9,7 +9,7 @@ import org.satabdi.javaResttutorial.messengerApp.model.Message;
 
 public class MessageService {
 	
-	private Map<Long, Message> messages = DatabaseClass.getMessages();
+	private static Map<Long, Message> messages = DatabaseClass.getMessages();
 	
 	public MessageService() {
 		Message m1 = new Message(1L, "Hello world", "Satabdi");
@@ -41,7 +41,7 @@ public class MessageService {
 	public Message addMessage(Message message) {
 		System.out.println("Entering addMessage");
 		messages.put(message.getId(), message);
-
+		
 		return message;
 	}
 
@@ -51,8 +51,9 @@ public class MessageService {
 			return null;
 		}
 		messages.put(message.getId(), message);
+		System.out.println("Updated msg = "+messages.get(message.getId()));
 
-		return message;
+		return messages.get(message.getId());
 	}
 	
 	public Message removeMessage(long id) {
