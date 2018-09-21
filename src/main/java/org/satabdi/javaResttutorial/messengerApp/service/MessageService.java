@@ -1,6 +1,7 @@
 package org.satabdi.javaResttutorial.messengerApp.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,32 @@ public class MessageService {
 		System.out.println("About to return from getAllMessages : " + messages.size());
 
 		return new ArrayList<Message>(messages.values());
+	}
+	
+	public List<?> getAllMessagesByYear(int year) {
+		List<Message> messagesForYear = new ArrayList<>();
+
+		System.out.println("Entering getAllMessagesByYear...");
+		Calendar cal  = Calendar.getInstance();
+
+		for(Message m : messages.values()) {
+			cal.setTime(m.getCreated());
+			if(cal.get(Calendar.YEAR) == year) {
+				messagesForYear.add(m);
+			}
+		}
+		return messagesForYear;
+	}
+	
+	public List<?> getAllMessagesPaginated(int start, int size) {
+
+		System.out.println("Entering getAllMessagesPaginated");
+
+		System.out.println("About to return from messages starting at : "+start+ " : size = "+size);
+		
+		ArrayList<?> wholeList = new ArrayList<>(messages.values());
+	
+		return wholeList.subList(start, start+size);
 	}
 
 	public Message getMessage(long id) {
