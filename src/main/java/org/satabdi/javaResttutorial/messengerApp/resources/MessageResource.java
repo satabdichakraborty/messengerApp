@@ -1,5 +1,7 @@
 package org.satabdi.javaResttutorial.messengerApp.resources;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -80,15 +82,17 @@ public class MessageResource {
 	}
 	
 	@POST
-	public Response addMessage(Message m) {
+	public Response addMessage(Message m) throws URISyntaxException {
 		
 		Message newMsg = msgService.addMessage(m);
 		
 		System.out.println("Adding a new message = "+m);
 		
-		return Response.status(Status.CREATED).entity(newMsg).build();
+		//return Response.status(Status.CREATED).entity(newMsg).build();
 
 		//return msgService.addMessage(m);
+		
+		return Response.created(new URI("messengerApp/webapi/messages/"+newMsg.getId())).entity(newMsg).build();
 	}
 	
 	@PUT
