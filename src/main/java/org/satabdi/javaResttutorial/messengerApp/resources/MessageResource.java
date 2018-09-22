@@ -13,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.satabdi.javaResttutorial.messengerApp.model.Message;
 import org.satabdi.javaResttutorial.messengerApp.service.MessageService;
@@ -78,11 +80,15 @@ public class MessageResource {
 	}
 	
 	@POST
-	public Message addMessage(Message m) {
+	public Response addMessage(Message m) {
+		
+		Message newMsg = msgService.addMessage(m);
 		
 		System.out.println("Adding a new message = "+m);
+		
+		return Response.status(Status.CREATED).entity(newMsg).build();
 
-		return msgService.addMessage(m);
+		//return msgService.addMessage(m);
 	}
 	
 	@PUT

@@ -28,7 +28,7 @@ public class Comment {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Message Id =" +this.id+ " : message = ["+this.message+"] : createdAt = "+this.createdAt+ " : author = "+this.author;
+		return "Comment Id =" +this.id+ " : comment msg = ["+this.message+"] : createdAt = "+this.createdAt+ " : author = "+this.author;
 	}
 	
 	
@@ -44,12 +44,15 @@ public class Comment {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Timestamp getCreated() {
+	
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreated(Timestamp created) {
-		this.createdAt = created;
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
 	}
+
 	public String getAuthor() {
 		return author;
 	}

@@ -1,6 +1,6 @@
 package org.satabdi.javaResttutorial.messengerApp.resources;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.satabdi.javaResttutorial.messengerApp.model.Comment;
+import org.satabdi.javaResttutorial.messengerApp.model.Message;
 import org.satabdi.javaResttutorial.messengerApp.service.CommentService;
 
 @Path("/")
@@ -23,16 +24,26 @@ public class CommentResource {
 	private CommentService commentService  = new CommentService();
 	
 	@GET
-	public List<Comment> getAllComments(@PathParam("messageId") long messageId) {
+	public Map<Message, Comment> getAllComments(@PathParam("messageId") long messageId) {
+		System.out.println("Entering getAllComments in CommentResource...");
 		return commentService.getAllComments(messageId);
 	}
 	
 	
 	@POST
 	public Comment addComment(@PathParam("messageId") String messageId, Comment comment) {
-		System.out.println("In addComment with messageId = "+messageId+" : comment ="+comment);
+		System.out.println("In addComment with messageId = ["+messageId+"] : comment ="+comment);
 		
-		return commentService.addComment(Long.getLong(messageId), comment);
+		Comment addedComment = new Comment(1L, "Default message", "Default author");
+		
+		if(null != commentService)
+		   // commentService.addComment(Long.getLong(messageId), comment);
+		{
+		//	System.out.println("commentService is not null");
+			 commentService.addComment(1L, comment);
+		}
+		
+		return addedComment;
 	}
 	
 	@PUT
@@ -49,6 +60,13 @@ public class CommentResource {
 		System.out.println("In removeComment ..");
 		
 		return commentService.removeComment(Long.parseLong(messageId), Long.parseLong(commentId));
+	}
+	
+	@GET
+	@Path("/{commentId}")
+	public Comment getMessage(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId) {
+		System.out.println("Entering getMessage in CommentResource...");
+		return commentService.getCommentById(messageId, commentId);
 	}
 	
 
