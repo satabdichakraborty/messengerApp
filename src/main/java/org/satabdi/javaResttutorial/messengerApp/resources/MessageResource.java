@@ -14,9 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.satabdi.javaResttutorial.messengerApp.model.Message;
 import org.satabdi.javaResttutorial.messengerApp.service.MessageService;
@@ -82,17 +83,26 @@ public class MessageResource {
 	}
 	
 	@POST
-	public Response addMessage(Message m) throws URISyntaxException {
+	public Response addMessage(Message m, @Context UriInfo uriInfo) throws URISyntaxException {
+		System.out.println(uriInfo.getAbsolutePath());
 		
 		Message newMsg = msgService.addMessage(m);
 		
 		System.out.println("Adding a new message = "+m);
 		
+		String msgId = String.valueOf(newMsg.getId());
+		
+		URI uri =  uriInfo.getAbsolutePathBuilder().path(msgId).build();
+		
+		return Response.created(uri).entity(newMsg).build();
+		
+		//return Response.created(new URI("messengerApp/webapi/messages/"+newMsg.getId())).entity(newMsg).build();
+		
 		//return Response.status(Status.CREATED).entity(newMsg).build();
 
 		//return msgService.addMessage(m);
 		
-		return Response.created(new URI("messengerApp/webapi/messages/"+newMsg.getId())).entity(newMsg).build();
+		
 	}
 	
 	@PUT
