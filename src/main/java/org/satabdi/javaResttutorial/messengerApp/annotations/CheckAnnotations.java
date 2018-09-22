@@ -8,6 +8,7 @@ import javax.ws.rs.MatrixParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
@@ -54,6 +55,16 @@ public class CheckAnnotations {
 		System.out.println("I am in getParamsUsingContext : "+path);
 		
 		return path;
+	}
+	
+	@GET
+	@Path("httpHeaders")
+	public String getHeadersUsingContext(@Context HttpHeaders httpHeaders) {
+		//Test URL : http://localhost:8080/messengerApp/webapi/annotations/httpHeaders
+		
+		System.out.println("I am in getHeadersUsingContext : "+httpHeaders);
+		
+		return httpHeaders.getRequestHeader("header").toString();
 	}
 
 }

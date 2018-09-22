@@ -2,6 +2,7 @@ package org.satabdi.javaResttutorial.messengerApp.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -43,6 +44,25 @@ public class MessageResource {
 		return msgService.getAllMessages();
 	}
 
+	@GET
+	@Path("beanParamTest")
+	public List<?> geAlltMessagesUsingBeanParam(@BeanParam MessageFilterBean bean) {
+		
+		// access URL http://localhost:8080/messengerApp/webapi/messages/beanParamTest
+
+		System.out.println("I am supposed to return all messages..");
+		
+		if(bean.getYear() > 0) {
+			return msgService.getAllMessagesByYear(bean.getYear());
+		}
+		
+		if(bean.getStart() > 0 && bean.getSize() > 0) {
+			return msgService.getAllMessagesPaginated(bean.getStart(), bean.getSize());
+		}
+		
+
+		return msgService.getAllMessages();
+	}
 	
 	@GET
 	@Path("/{messageId}")
@@ -52,7 +72,7 @@ public class MessageResource {
         //long msgId = Long.parseLong(messageId);
 		System.out.println("Entering getMessagesById with id = "+messageId);
 		Message m = msgService.getMessage(messageId);
-		System.out.println("Message created at : "+m.getCreated());
+		System.out.println("Message created at : "+m.getCreatedAt());
 
 		return m;
 	}
@@ -82,6 +102,12 @@ public class MessageResource {
         //long msgId = Long.parseLong(messageId);
 		System.out.println("Entering deleteMessagesById with id = "+messageId);
 		msgService.removeMessage(messageId);
+	}
+	
+	
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource() {
+		return new CommentResource();
 	}
 
 }

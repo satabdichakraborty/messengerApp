@@ -40,7 +40,7 @@ public class MessageService {
 		Calendar cal  = Calendar.getInstance();
 
 		for(Message m : messages.values()) {
-			cal.setTime(m.getCreated());
+			cal.setTime(m.getCreatedAt());
 			if(cal.get(Calendar.YEAR) == year) {
 				messagesForYear.add(m);
 			}
