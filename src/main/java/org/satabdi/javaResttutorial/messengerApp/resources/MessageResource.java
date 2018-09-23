@@ -72,13 +72,20 @@ public class MessageResource {
 	
 	@GET
 	@Path("/{messageId}")
-	public Message getMessagesById(@PathParam("messageId") long messageId){
+	public Message getMessagesById(@PathParam("messageId") long messageId, @Context UriInfo uriInfo){
 		
 		// access URL http://localhost:8080/messengerApp/webapi/messages/1
         //long msgId = Long.parseLong(messageId);
 		System.out.println("Entering getMessagesById with id = "+messageId);
 		Message m = msgService.getMessage(messageId);
 		System.out.println("Message created at : "+m.getCreatedAt());
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(MessageResource.class)
+				.path(Long.toString(messageId))
+				.build()
+				.toString();
+		m.addLink(uri, 
+			"Self");
 
 		return m;
 	}

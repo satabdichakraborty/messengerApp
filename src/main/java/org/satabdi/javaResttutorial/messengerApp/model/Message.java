@@ -1,8 +1,10 @@
 package org.satabdi.javaResttutorial.messengerApp.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,8 +18,16 @@ public class Message {
 	private Timestamp createdAt;
 	private String author;
 	private Map<Long, Comment> comments = new HashMap<>();
+	private List<Link> links = new ArrayList<>();
 	
-	
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
 	public Message() {}
 	
 	public Message(long id, String message, String author) {
@@ -32,7 +42,7 @@ public class Message {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
+		
 		return "Message Id =" +this.id+ " : message = ["+this.message+"] : createdAt = "+this.createdAt+ " : author = "+this.author;
 	}
 	
@@ -71,6 +81,13 @@ public class Message {
 
 	public void setComments(Map<Long, Comment> comments) {
 		this.comments = comments;
+	}
+	
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+			link.setLink(url);
+			link.setRel(rel);
+		links.add(link);
 	}
 
 	
