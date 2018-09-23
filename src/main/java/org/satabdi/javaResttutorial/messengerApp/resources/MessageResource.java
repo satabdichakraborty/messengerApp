@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.satabdi.javaResttutorial.messengerApp.exception.DataNotFoundException;
 import org.satabdi.javaResttutorial.messengerApp.model.Message;
 import org.satabdi.javaResttutorial.messengerApp.service.MessageService;
 
@@ -71,7 +72,7 @@ public class MessageResource {
 	
 	@GET
 	@Path("/{messageId}")
-	public Message getMessagesById(@PathParam("messageId") long messageId) {
+	public Message getMessagesById(@PathParam("messageId") long messageId){
 		
 		// access URL http://localhost:8080/messengerApp/webapi/messages/1
         //long msgId = Long.parseLong(messageId);

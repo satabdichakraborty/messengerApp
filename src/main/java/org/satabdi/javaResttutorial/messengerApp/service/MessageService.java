@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.satabdi.javaResttutorial.messengerApp.database.DatabaseClass;
+import org.satabdi.javaResttutorial.messengerApp.exception.DataNotFoundException;
 import org.satabdi.javaResttutorial.messengerApp.model.Message;
 
 public class MessageService {
@@ -62,7 +63,12 @@ public class MessageService {
 	public Message getMessage(long id) {
 		System.out.println("Entering getMessage");
 		
-		return messages.get(id);
+		Message msg = messages.get(id);
+		if(msg == null) {
+			throw new DataNotFoundException("Message with id = "+id+ " not found.");
+		}
+		
+		return msg;
 	}
 
 	public Message addMessage(Message message) {
